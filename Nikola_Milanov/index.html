@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Pot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>🌱 Smart Pot Dashboard</h1>
+</header>
+
+<section class="dashboard">
+
+    <div class="card">
+        <h3>Температура</h3>
+        <p id="temp">--</p>
+    </div>
+
+    <div class="card">
+        <h3>Влажност въздух</h3>
+        <p id="humidity">--</p>
+    </div>
+
+    <div class="card">
+        <h3>Почвена влажност</h3>
+        <p id="soil">--</p>
+    </div>
+
+    <div class="card">
+        <h3>Налягане</h3>
+        <p id="pressure">--</p>
+    </div>
+
+</section>
+
+<section class="ai-section">
+    <h2>AI Анализ</h2>
+    <p id="status">Анализира се...</p>
+</section>
+
+<section class="camera">
+    <h2>Камера</h2>
+    <img src="plant.jpg" id="cameraImg">
+</section>
+
+<section class="chart">
+    <h2>Графика (Температура)</h2>
+    <canvas id="myChart"></canvas>
+</section>
+
+<section class="history">
+    <h2>История</h2>
+    <ul id="historyList"></ul>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
