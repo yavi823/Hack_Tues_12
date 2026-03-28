@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Pot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>🌱 Smart Pot Dashboard</h1>
+    </header>
+
+    <main class="main-wrap">
+
+        <section class="top-grid">
+            <div class="card sensor-card">
+                <h3>Температура</h3>
+                <p id="temp">-- °C</p>
+            </div>
+
+            <div class="card sensor-card">
+                <h3>Влажност</h3>
+                <p id="humidity">-- %</p>
+            </div>
+
+            <div class="card sensor-card">
+                <h3>Налягане</h3>
+                <p id="pressure">-- hPa</p>
+            </div>
+
+            <div class="card sensor-card">
+                <h3>AI Статус</h3>
+                <p id="status">Няма данни</p>
+            </div>
+        </section>
+
+        <section class="middle-grid">
+            <div class="card camera-card">
+                <h2>Снимка на растението</h2>
+                <img id="cameraImg" src="/plant.jpg" alt="Снимка на растението">
+            </div>
+
+            <div class="card chart-card">
+                <h2>Графика</h2>
+                <canvas id="tempChart"></canvas>
+            </div>
+        </section>
+
+        <section class="card history-card">
+            <h2>История</h2>
+            <ul id="historyList"></ul>
+        </section>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

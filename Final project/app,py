@@ -1,0 +1,95 @@
+from flask import Flask, jsonify, send_from_directory
+import sqlite3
+import os
+
+app = Flask(__name__)
+
+def get_data():
+    conn = sqlite3.connect("smartpot.db")
+    c = conn.cursor()
+
+    c.execute("""
+    SELECT temperature, humidity, pressure
+    FROM sensor_data
+    ORDER BY id DESC
+    LIMIT 1
+    """)
+    sensor = c.fetchone()
+
+    c.execute("""
+    SELECT status
+    FROM ai_status
+    ORDER BY id DESC
+    LIMIT 1
+    """)
+    ai = c.fetchone()
+
+    c.execute("""
+    SELECT status, timestamp
+    FROM ai_status
+    ORDER BY id DESC
+    LIMIT 5
+    """)
+    ai_history = c.fetchall()
+
+    c.execute("""
+    SELECT temperature, timestamp
+    FROM sensor_data
+    ORDER BY id DESC
+    LIMIT 6
+    """)
+    chart_rows = c.fetchall()
+
+    conn.close()
+
+    chart_rows.reverse()
+
+    chart_labels = []
+    chart_temps = []
+
+    for row in chart_rows:
+        temp = row[0]
+        time_text = row[1]
+        short_time = time_text[11:16]
+        chart_labels.append(short_time)
+        chart_temps.append(temp)
+
+    history = []
+    for row in ai_history:
+        history.append({
+            "text": row[0],
+            "time": row[1]
+        })
+
+    return {
+        "temperature": sensor[0] if sensor else "--",
+        "humidity": sensor[1] if sensor else "--",
+        "pressure": sensor[2] if sensor else "--",
+        "status": ai[0] if ai else "Няма AI анализ",
+        "image": "/plant.jpg",
+        "history": history,
+        "chart_labels": chart_labels,
+        "chart_temps": chart_temps
+    }
+
+@app.route("/")
+def home():
+    return send_from_directory(os.getcwd(), "index.html")
+
+@app.route("/style.css")
+def css():
+    return send_from_directory(os.getcwd(), "style.css")
+
+@app.route("/script.js")
+def js():
+    return send_from_directory(os.getcwd(), "script.js")
+
+@app.route("/plant.jpg")
+def image():
+    return send_from_directory(os.getcwd(), "plant.jpg")
+
+@app.route("/data")
+def data():
+    return jsonify(get_data())
+
+app.run(host="0.0.0.0", port=5000)
